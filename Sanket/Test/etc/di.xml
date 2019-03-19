@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Sanket\Test\Api\ImageRepositoryInterface" type="Sanket\Test\Model\ImageRepository" />
+    <preference for="Sanket\Test\Api\Data\ImageInterface" type="Sanket\Test\Model\Image" />
+    <virtualType name="StudentDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Sanket\Test\Model\Resource\Image\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">StudentDataGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Sanket\Test\Model\ResourceModel\Image\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">test_details</argument>
+            <argument name="resourceModel" xsi:type="string">Sanket\Test\Model\ResourceModel\Image</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="StudentImageUploader" type="Sanket\Test\Model\Uploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="const">Sanket\Test\Model\Uploader::IMAGE_TMP_PATH</argument>
+            <argument name="basePath" xsi:type="const">Sanket\Test\Model\Uploader::IMAGE_PATH</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sampleimageuploader_image_grid_data_source" xsi:type="string">Sanket\Test\Model\ResourceModel\Image\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Sanket\Test\Model\UploaderPool">
+        <arguments>
+            <argument name="uploaders" xsi:type="array">
+                <item name="image" xsi:type="string">StudentImageUploader</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Sanket\Test\Controller\Adminhtml\Image\Upload">
+        <arguments>
+            <argument name="uploader" xsi:type="object">StudentImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="Sanket\Test\Ui\Component\Listing\Column\Image">
+        <arguments>
+            <argument name="imageModel" xsi:type="object">StudentImageUploader</argument>
+        </arguments>
+    </type>
+    <type name="Sanket\Test\Controller\Adminhtml\Image\MassDelete">
+        <arguments>
+            <argument name="successMessage" xsi:type="string" translate="true">A total of %1 record(s) have been deleted.</argument>
+            <argument name="errorMessage" xsi:type="string" translate="true">An error occurred while deleting record(s).</argument>
+        </arguments>
+    </type>
+</config>

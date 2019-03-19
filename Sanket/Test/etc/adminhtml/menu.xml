@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Sanket_Test::image"
+             title="Sample Image Uploader"
+             module="Sanket_Test"
+             sortOrder="75" resource="Sanket_Test::image"
+             action="sampleimageuploader/image/index"/>
+    </menu>
+</config>
